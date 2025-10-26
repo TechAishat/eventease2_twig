@@ -1,34 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Create New Ticket - TicketMaster{% endblock %}
+{% block title %}New Ticket - TicketMaster{% endblock %}
 
-{% block content %}
-    {% include 'tickets/_form.html.twig' with {
-        'title': 'Create New Ticket',
-        'form_action': path('tickets.store'),
-        'submit_button': 'Create Ticket',
-        'statuses': {
-            'open': 'Open',
-            'in_progress': 'In Progress',
-            'closed': 'Closed'
-        },
-        'priorities': {
-            'low': 'Low',
-            'medium': 'Medium',
-            'high': 'High'
-        },
-        'is_admin': false,
-        'is_edit': false,
-        'users': []
-    } %}
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            {{ include('tickets/_form_complete.html.twig', {
+                title: 'Create New Ticket',
+                form_action: path('app_tickets_create'),
+                statuses: {
+                    'open': 'Open',
+                    'in_progress': 'In Progress',
+                    'closed': 'Closed'
+                },
+                priorities: {
+                    'low': 'Low',
+                    'medium': 'Medium',
+                    'high': 'High'
+                },
+                categories: ['Technical', 'Billing', 'Sales', 'General'],
+                users: users|default([]),
+                is_edit: false
+            }) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block styles %}
     {{ parent() }}
-    {{ block('styles', 'tickets/_form.html.twig') }}
+    {{ block('styles', 'tickets/_form_complete.html.twig') }}
 {% endblock %}
 
 {% block scripts %}
     {{ parent() }}
-    {{ block('scripts', 'tickets/_form.html.twig') }}
+    {{ block('scripts', 'tickets/_form_complete.html.twig') }}
+{% endblock %}
 {% endblock %}

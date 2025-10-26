@@ -2,31 +2,40 @@
 
 {% block title %}Edit Ticket #{{ ticket.id }} - TicketMaster{% endblock %}
 
-{% block content %}
-    {% include 'tickets/_form.html.twig' with {
-        'title': 'Edit Ticket #' ~ ticket.id,
-        'form_action': path('tickets.update', {id: ticket.id}),
-        'submit_button': 'Update Ticket',
-        'ticket': ticket,
-        'statuses': {
-            'open': 'Open',
-            'in_progress': 'In Progress',
-            'closed': 'Closed'
-        },
-        'priorities': {
-            'low': 'Low',
-            'medium': 'Medium',
-            'high': 'High'
-        },
-        'is_admin': is_admin ?? false,
-        'is_edit': true,
-        'users': users ?? []
-    } %}
+{% block body %}
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            {{ include('tickets/_form_complete.html.twig', {
+                title: 'Edit Ticket #' ~ ticket.id,
+                form_action: path('tickets.update', {id: ticket.id}),
+                ticket: ticket,
+                statuses: {
+                    'open': 'Open',
+                    'in_progress': 'In Progress',
+                    'closed': 'Closed'
+                },
+                priorities: {
+                    'low': 'Low',
+                    'medium': 'Medium',
+                    'high': 'High'
+                },
+                categories: ['Technical', 'Billing', 'Sales', 'General'],
+                users: users|default([]),
+                is_edit: true,
+                is_admin: is_admin|default(false)
+            }) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block styles %}
     {{ parent() }}
-    {{ block('styles', 'tickets/_form.html.twig') }}
+    {{ block('styles', 'tickets/_form_complete.html.twig') }}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    {{ block('scripts', 'tickets/_form_complete.html.twig') }}
 {% endblock %}
 
 {% block scripts %}
