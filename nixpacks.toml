@@ -1,16 +1,16 @@
 [phases.setup]
 nixPkgs = [
     'php82',
-    'php82Extensions.curl',
-    'php82Extensions.mbstring',
-    'php82Extensions.xml',
-    'php82Extensions.zip',
-    'php82Extensions.gd',
-    'php82Extensions.mysqli',
-    'php82Extensions.pdo',
-    'php82Extensions.pdo_mysql',
-    'php82Extensions.bcmath',
-    'composer',
+    'php82.extensions.curl',
+    'php82.extensions.mbstring',
+    'php82.extensions.xml',
+    'php82.extensions.zip',
+    'php82.extensions.gd',
+    'php82.extensions.mysqli',
+    'php82.extensions.pdo',
+    'php82.extensions.pdo_mysql',
+    'php82.extensions.bcmath',
+    'php82.packages.composer',
     'nodejs-18_x',
     'yarn'
 ]
