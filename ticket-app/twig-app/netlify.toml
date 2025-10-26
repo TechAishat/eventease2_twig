@@ -1,0 +1,25 @@
+[build]
+  command = "composer install --no-dev --optimize-autoloader"
+  publish = "public"
+
+[build.environment]
+  PHP_VERSION = "8.3"
+  COMPOSER_VERSION = "2.5.8"
+  NODE_VERSION = "18"
+
+[context.production]
+  command = "composer install --no-dev --optimize-autoloader && php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+
+[[redirects]]
+  from = "/*"
+  to = "/index.php"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:;"
