@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Ticket #{{ ticket.id }} - TicketMaster{% endblock %}
+
+{% block content %}
+    {% include 'tickets/_form.html.twig' with {
+        'title': 'Edit Ticket #' ~ ticket.id,
+        'form_action': path('tickets.update', {id: ticket.id}),
+        'submit_button': 'Update Ticket',
+        'ticket': ticket,
+        'statuses': {
+            'open': 'Open',
+            'in_progress': 'In Progress',
+            'closed': 'Closed'
+        },
+        'priorities': {
+            'low': 'Low',
+            'medium': 'Medium',
+            'high': 'High'
+        },
+        'is_admin': is_admin ?? false,
+        'is_edit': true,
+        'users': users ?? []
+    } %}
+{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+    {{ block('styles', 'tickets/_form.html.twig') }}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    {{ block('scripts', 'tickets/_form.html.twig') }}
+    
+    <script>
+        // Additional scripts specific to the edit page can go here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Show a warning if the ticket is closed
+            const statusSelect = document.getElementById('status');
+            if (statusSelect && statusSelect.value === 'closed') {
+                showToast('This ticket is currently closed. Any changes will reopen it.');
+            }
+            
+            // Add change listener to show warning when status changes to closed
+            statusSelect?.addEventListener('change', function() {
+                if (this.value === 'closed') {
+                    showToast('Setting status to Closed will prevent further updates.');
+                }
+            });
+        });
+    </script>
+{% endblock %}

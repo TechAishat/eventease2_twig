@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Ticket - TicketMaster{% endblock %}
+
+{% block content %}
+    {% include 'tickets/_form.html.twig' with {
+        'title': 'Create New Ticket',
+        'form_action': path('tickets.store'),
+        'submit_button': 'Create Ticket',
+        'statuses': {
+            'open': 'Open',
+            'in_progress': 'In Progress',
+            'closed': 'Closed'
+        },
+        'priorities': {
+            'low': 'Low',
+            'medium': 'Medium',
+            'high': 'High'
+        },
+        'is_admin': false,
+        'is_edit': false,
+        'users': []
+    } %}
+{% endblock %}
+
+{% block styles %}
+    {{ parent() }}
+    {{ block('styles', 'tickets/_form.html.twig') }}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    {{ block('scripts', 'tickets/_form.html.twig') }}
+{% endblock %}
