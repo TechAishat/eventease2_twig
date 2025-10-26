@@ -1,0 +1,25 @@
+[phases.setup]
+nixPkgs = [
+    'php82',
+    'php82Extensions.curl',
+    'php82Extensions.mbstring',
+    'php82Extensions.xml',
+    'php82Extensions.zip',
+    'php82Extensions.gd',
+    'php82Extensions.mysqli',
+    'php82Extensions.pdo',
+    'php82Extensions.pdo_mysql',
+    'php82Extensions.bcmath',
+    'composer',
+    'nodejs-18_x',
+    'yarn'
+]
+
+[phases.install]
+cmds = [
+    'composer install --no-dev --optimize-autoloader',
+    'npm install'
+]
+
+[start]
+cmd = "php -S 0.0.0.0:${PORT:-8000} -t public"
